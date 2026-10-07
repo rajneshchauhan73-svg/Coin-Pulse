@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoinPulse - Earn Rewards</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0b1120; color: #ffffff; padding: 16px; }
+        
+        /* Top Navigation Header */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; }
+        .logo { font-size: 20px; font-weight: bold; color: #38bdf8; }
+        .balance-badge { background: #1e293b; border: 1px solid #334155; padding: 6px 14px; border-radius: 20px; font-weight: bold; color: #facc15; }
+
+        /* Banner Card */
+        .banner { background: linear-gradient(135deg, #1e1b4b, #312e81); border-radius: 16px; padding: 20px; margin: 16px 0; border: 1px solid #4338ca; }
+        .banner h2 { font-size: 18px; margin-bottom: 6px; color: #a5b4fc; }
+        .banner p { font-size: 13px; color: #cbd5e1; }
+
+        /* Task Section */
+        .section-title { font-size: 16px; margin: 16px 0 10px 0; color: #94a3b8; }
+        .task-card { background: #1e293b; border-radius: 12px; padding: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #334155; }
+        .task-info h4 { font-size: 15px; color: #f8fafc; }
+        .task-info p { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+        .reward-btn { background: #22c55e; color: #000; border: none; padding: 8px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+        /* Bottom Nav */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #0f172a; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #1e293b; }
+        .nav-item { color: #94a3b8; font-size: 12px; text-decoration: none; text-align: center; }
+        .nav-item.active { color: #38bdf8; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <!-- Header Bar -->
+    <div class="header">
+        <div class="logo">⚡ CoinPulse</div>
+        <div class="balance-badge">🪙 <span id="user-coins">0</span> Coins</div>
+    </div>
+
+    <!-- Main Banner -->
+    <div class="banner">
+        <h2 id="banner-title">Welcome to CoinPulse</h2>
+        <p id="banner-notice">Loading latest offers...</p>
+    </div>
+
+    <!-- Daily Tasks -->
+    <div class="section-title">DAILY TASKS</div>
+    <div id="tasks-container">
+        <p style="color: #64748b; font-size: 13px;">Loading tasks from GitHub...</p>
+    </div>
+
+    <!-- Bottom Menu -->
+    <div class="bottom-nav">
+        <a href="#" class="nav-item active">Home</a>
+        <a href="#" class="nav-item">Offers</a>
+        <a href="#" class="nav-item">Wallet</a>
+        <a href="#" class="nav-item">Refer</a>
+    </div>
+
+    <!-- JavaScript code to fetch tasks from tasks.json -->
+    <script>
+        // Apni tasks.json file ka raw URL yahan paste karein
+        const jsonUrl = 'https://raw.githubusercontent.com/rajneshchauhan73-svg/Coin-Pulse/main/tasks.json';
+
+        fetch(jsonUrl)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('banner-notice').innerText = data.notice;
+                document.getElementById('user-coins').innerText = data.daily_bonus_coins;
+
+                const tasksContainer = document.getElementById('tasks-container');
+                tasksContainer.innerHTML = '';
+
+                data.tasks.forEach(task => {
+                    const taskHTML = `
+                        <div class="task-card">
+                            <div class="task-info">
+                                <h4>${task.title}</h4>
+                                <p>${task.description}</p>
+                            </div>
+                            <button class="reward-btn">+${task.reward_coins} Coins</button>
+                        </div>
+                    `;
+                    tasksContainer.innerHTML += taskHTML;
+                });
+            })
+            .catch(error => {
+                console.error('Error loading JSON:', error);
+                document.getElementById('tasks-container').innerHTML = '<p style="color:red;">Failed to load tasks.</p>';
+            });
+    </script>
+</body>
+</html>
