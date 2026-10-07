@@ -1,0 +1,22 @@
+{
+  "app_name": "Coin-Pulse",
+  "app_version": "1.0.0",
+  "notice": "Welcome to Coin-Pulse! Complete daily tasks to earn rewards.",
+  "daily_bonus_coins": 10,
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Bhim UPI Offer",
+      "description": "Register and complete 1st transaction",
+      "reward_coins": 30,
+      "link": "https://example.com/bhim"
+    },
+    {
+      "id": 2,
+      "title": "Spin & Win",
+      "description": "Spin the wheel for lucky reward",
+      "reward_coins": 5,
+      "link": ""
+    }
+  ]
+}
